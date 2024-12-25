@@ -1,29 +1,36 @@
-# Indoor temperature and humidity
+# Mini weather station
 
-Outdoor weather info is easily available via various apps and online weather data portabls but how about indoor weather conditions?
+This is the third iteration of the project. Current implementation features a use of ESP32-S3 board programmed in MicroPython.
+The WiFi connection capability of the board features real time tracker and API call for outdoor weather information.
 
-My desire to know the room temperature inspired me to take on this project. For simplicity and ease a display was added to read through the data. This is a very basic project where data is read from the sensor and the corresponding reading is displayed on the screen.
 
 ## Components used
 
-1. RaspberryPi Pico Zero
-2. DHT11 (temperature and humidity) sensor
+1. ESP32-S3 board
+2. DHT11 sensor
 3. 1.3 inch OLED display
+4. Breadboard and Jumper wires
+
+## Tech stack:
+1. ntptime
+2. <a href="https://github.com/robert-hh/SH1106/blob/master/readme.md"> SH1106 </a> (For 1.3" OLED display)
 
 ## Future updated
 
-1. Various LED indicators for running the setup independently.<br>
-   Added functionality to turn on the onboard Neopixel LED to indicate the pico is up running, starting and ending the process.
+1. Real time tracker
+2. Outdoor weather information
 
-2. Text animation in OLED.<br>
-   Added functionalities to animate the text displayed on the OLED over static texts to make it eye catching.
 
 ## Aditional info
 
-Normal ssd1306 library does not support 1.3 inch OLED display. Hence, sh1106 library was used instead. The following documentation was used as a reference.
+- `ssd1306` library does not support 1.3 inch OLED display. This <a href="https://github.com/robert-hh/SH1106/blob/master/readme.md"> documentation </a> offers the solution.
+    
 
-    https://github.com/robert-hh/SH1106/blob/master/readme.md
+- <a href="https://docs.micropython.org/en/latest/esp32/tutorial/intro.html"> Documentation </a> for flashing MicroPython firmware to ESP32 boards.
+
+- Note: If the board is a clone, please flash at "0x00" not "0x10000".
+<a href="https://github.com/orgs/micropython/discussions/10206"> Discussion </a>
 
 ## Functional Setup
 
-![IMG_5573](https://github.com/user-attachments/assets/03bca2ae-bb8f-4d51-a7ea-0c895c9da09b)
+
