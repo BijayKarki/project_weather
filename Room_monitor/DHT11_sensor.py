@@ -1,36 +1,46 @@
-# Costumized for RP2040-Zero
+"""
+DHT11 Sensor Reader Script
+
+This script interfaces with a DHT11 sensor using the Raspberry Pi Pico or similar MicroPython-compatible board. 
+It reads temperature (in °C) and humidity (in %) from the sensor and prints the results to the console. 
+
+"""
 
 from machine import Pin
-from dht import DHT11
+import dht
+from time import sleep
 
+# Set up the DHT11 sensor
+dht_pin = Pin(4)
+dht_sensor = dht.DHT11(dht_pin)
 
-def get_data (pin_no):
+def read_dht11():
     """
-    Returns a dictionary data type for humidtity(%) and temperature(°C) from the DHT11 sensor
+    Reads temperature and humidity from the DHT11 sensor.
+
+    Returns:
+        tuple: (temperature, humidity)  as int if the reading is successful.
+        (None, None) if the reading fails due to a sensor error.
     """
-    # create DHT11 object
-    sensor = DHT11(Pin(int(pin_no)))
+    sleep(1)  # Sampling rate for DHT11 = 1 Hz
     
     try:
-        # read sensor data
-        sensor.measure()
+        dht_sensor.measure()
+        temp = dht_sensor.temperature()
+        humidity = dht_sensor.humidity()
+        return temp, humidity
+    except OSError as e:
+        print(f"Failed to read from DHT11 sensor: {e}")
+        return None, None
 
-        # get humidity and temperature
-        hum = sensor.humidity()
-        temp = sensor.temperature()
-        
-        return{"humidity":hum, "temperature":temp}
-
-    except Exception as e:
-        return(f"Failed to read from sensor: {e}", False)
-
-
+# test 
 if __name__ == "__main__":
-    print("\nTesting DHT11_sensor.py module\nd")
-    from time import sleep
     try:
         while True:
-            print(get_data(7))
-            sleep(.5)
+            temp, humidity = read_dht11()
+            if temp is not None and humidity is not None:
+                print(f"Temperature: {temp}°C, Humidity: {humidity}%")
+            else:
+                print("Error reading DHT11 sensor.")
     except KeyboardInterrupt:
-        print("\nProgram terminated by the user")
+        print("Interrupted by the user")
