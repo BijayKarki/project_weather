@@ -1,7 +1,7 @@
 # Mini weather station
 
 This is the third iteration of the project. Current implementation features a use of ESP32-S3 board programmed in MicroPython.
-The WiFi connection capability of the board features real time tracker and API call for outdoor weather information.
+The WiFi connection capability of the board features real time tracker and API call for outdoor weather information. The data gathered is finally pushed to <a href=https://thingspeak.mathworks.com/channels/3024639> ThingSpeak </a> for easy acccess and visualization purposes.
 
 ## Components used
 
@@ -14,11 +14,13 @@ The WiFi connection capability of the board features real time tracker and API c
 
 1. ntptime
 2. <a href="https://github.com/robert-hh/SH1106/blob/master/readme.md"> SH1106 </a> (For 1.3" OLED display)
+3. <a href="https://thingspeak.mathworks.com/"> ThingSpeak </a>
 
 ## Future updated
 
 1. Real time tracker
 2. Outdoor weather information
+3. Online data visualization (public access)
 
 ## Aditional info
 
