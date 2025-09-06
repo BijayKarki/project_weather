@@ -1,0 +1,19 @@
+# --- Secrets ---
+config.py
+
+# --- Python cache ---
+__pycache__/
+*.py[cod]
+
+# --- MicroPython compiled files ---
+*.mpy
+
+# --- Logs & temp files ---
+*.log
+scratch*.py
+
+# --- Editor/OS junk ---
+*.swp
+*.swo
+*.DS_Store
+.vscode/

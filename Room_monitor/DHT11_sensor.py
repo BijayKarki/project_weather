@@ -3,7 +3,6 @@ DHT11 Sensor Reader Script
 
 This script interfaces with a DHT11 sensor using the Raspberry Pi Pico or similar MicroPython-compatible board. 
 It reads temperature (in °C) and humidity (in %) from the sensor and prints the results to the console. 
-
 """
 
 from machine import Pin
