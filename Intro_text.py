@@ -64,7 +64,14 @@ def scene_second():
         sleep(.2)
     oled.fill(0)
     
-    
+def scene_interrupt():
+    oled.fill(0)
+    oled.text("Terminating", 0, 0)
+    oled.text("See you again!", 0, 20)
+    oled.show()
+    sleep(2)
+    oled.fill(0)
+   
 def clear_line(y, length):
     """Clear a line of text at a specific y-coordinate"""
     oled.fill_rect(0, y, length, 8, 0)  # Adjust height based on font size

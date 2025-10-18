@@ -1,68 +1,89 @@
 from time import sleep, time
 import gc
+from machine import WDT
 
 import config
-
 from dht11_sensor import read_dht11
-from Intro_text import scene_first, scene_second, display_weather_n_time
+from Intro_text import scene_first, scene_second, scene_interrupt, display_weather_n_time
 from oled_init import init_oled
 from open_weather_api import fetch_weather_data
 from connect_wifi import connect_wifi, is_connected
-from ntp_sync import sync_time_finland, get_Finnish_time
+from ntp_sync import sync_time_finland
 from thingspeak import upload_to_thingspeak
-    
 
-# Connect to WIFI
+# --- Setup WiFi + NTP once ---
 ssid = config.WIFI_SSID
 passphrase = config.WIFI_PASSWORD
 connect_wifi(ssid, passphrase)
-
-# Sync time once at the beginning
 sync_time_finland()
 
-# Start up OLED display with animated text
-scene_first()
-scene_second()
+# --- Startup animation ---
+scene_first()  # Welcome animation
+scene_second() # Fake mesurement start info
 
-# Display tabular weather and time info 
+
+# --- Watchdog (60 sec timeout) ---
+wdt = WDT(timeout=60000)
 
 try:
     last_weather_update = 0
     last_time_update = 0
 
+    # initial values (safe defaults)
+    room_temp, room_humidity = None, None
+    out_temp, out_humidity, wind_speed = None, None, None
+
     while True:
         now = time()
-        
-        # Memory counting 
         Memory_count = gc.mem_free()
 
-        # Update and show current time every 60 seconds
+        # --- Indoor weather + clock update every 60s ---
         if now - last_time_update >= 60 or last_time_update == 0:
-            
-            if now - last_weather_update >= 15 or last_weather_update == 0:
+            try:
                 room_temp, room_humidity = read_dht11()
-                out_temp, out_humidity, wind_speed = fetch_weather_data()
-                
-                # Update weather every 10 minutes
-                upload_to_thingspeak(config.THINGSPEAK_API_KEY, room_temp, room_humidity, out_temp, out_humidity, wind_speed, Memory_count)
-
-                display_weather_n_time(room_temp, room_humidity, out_temp, out_humidity, wind_speed)
-                
-                last_weather_update = now
-          
+            except Exception as e:
+                print("[ERROR] DHT11 read failed:", e)
+                # keep last known values
+            print(f"[{now}] Indoor update: {room_temp}°C, {room_humidity}%")
+            
+            # --- Display tabular weather and time info ---
+            display_weather_n_time(room_temp, room_humidity, out_temp, out_humidity, wind_speed)
             last_time_update = now
-        
-        sleep(5)  # Light sleep to avoid busy loop
-        
-        #print("Free memory: ", gc.mem_free())
+
+        # --- Outdoor + ThingSpeak every 900s (15 min) ---
+        if now - last_weather_update >= 900 or last_weather_update == 0:
+            try:
+                if is_connected():
+                    out_temp, out_humidity, wind_speed = fetch_weather_data()
+                    upload_to_thingspeak(
+                        config.THINGSPEAK_API_KEY,
+                        room_temp, room_humidity,
+                        out_temp, out_humidity, wind_speed,
+                        Memory_count
+                    )
+                    print(f"[{now}] Weather update pushed to ThingSpeak")
+                else:
+                    print(f"[{now}] WiFi disconnected, skipping ThingSpeak")
+            except Exception as e:
+                print("[ERROR] Weather/ThingSpeak failed:", e)
+
+            display_weather_n_time(room_temp, room_humidity, out_temp, out_humidity, wind_speed)
+            last_weather_update = now 
+
+        # --- Periodic GC cleanup every 10 minutes ---
+        if now % 600 < 5:  # within 5s window
+            gc.collect()
+            print(f"[{now}] Forced gc.collect(), free mem: {gc.mem_free()}")
+
+        # --- Reset watchdog each loop ---
+        wdt.feed()
+
+        sleep(5)
 
 except KeyboardInterrupt:
-    # Handle program termination (Ctrl+C)
-    oled.fill(0)
-    oled.text("Terminating", 0, 0)
-    oled.text("See you again!", 0, 20)
-    oled.show()
-    sleep(2)
-    oled.fill(0)
+    try:
+        scene_interrupt()
+    except:
+        print("OLED did not work. Exiting the program")
 
 

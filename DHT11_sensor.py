@@ -21,20 +21,19 @@ def read_dht11():
         tuple: (temperature, humidity)  as int if the reading is successful.
         (None, None) if the reading fails due to a sensor error.
     """
-    sleep(1)  # Sampling rate for DHT11 = 1 Hz
-    
+    sleep(2)  # Sampling rate for DHT11 = 1 Hz 
     try:
         dht_sensor.measure()
         temp = dht_sensor.temperature()
         humidity = dht_sensor.humidity()
+        #print (type(humidity), type(temp))
         return temp, humidity
     except OSError as e:
         print(f"Failed to read from DHT11 sensor: {e}")
         return None, None
 
-# test 
 if __name__ == "__main__":
-    try:
+    try: 
         while True:
             temp, humidity = read_dht11()
             if temp is not None and humidity is not None:
