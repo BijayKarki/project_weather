@@ -23,13 +23,14 @@ The initial goal was just to measure the indoor temperature. However it is much 
 
 ## Evolution
 
-| Stage | MCU                    | Highlights                                                      | Branch                                                                         |
-| ----- | ---------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| 1     | RPi-Pico-Zero (RP2040) | Reads DHT11 sensor, displays data locally on an OLED screen     | [pico-zero-V1](https://github.com/BijayKarki/project_weather/tree/pico-zero)   |
-| 2     | RPi-Pico-Zero (RP2040) | Added feats: onboard Neopixel LED indicators + TEXT animation   | [pico-zero-V2](https://github.com/BijayKarki/project_weather/tree/feature-LED) |
-| 3     | ESP32-S3               | Adds Wi-Fi connectivity, real time, urequests, cloud upload  | [esp32-s3](https://github.com/BijayKarki/project_weather/blob/ESP32-S3)        |
+| Stage | MCU                    | Highlights                                                  | Branch                                                                         |
+| ----- | ---------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| 1     | RPi-Pico-Zero (RP2040) | Reads DHT11 sensor, displays data locally on an OLED screen | [pico-zero-V1](https://github.com/BijayKarki/project_weather/tree/pico-zero)   |
+| 2     | RPi-Pico-Zero (RP2040) | feats: onboard LED indicators + TEXT animation              | [pico-zero-V2](https://github.com/BijayKarki/project_weather/tree/feature-LED) |
+| 3     | ESP32-S3               | Adds Wi-Fi connectivity, real time, urequests, cloud upload | [esp32-s3](https://github.com/BijayKarki/project_weather/blob/ESP32-S3)        |
 
-Each branch represents a self-contained stage of the project’s growth — from **offline sensing** to **connected intelligence**.
+Each branch represents a progression towards adding something more.<br>
+**Local sensing** → **Online Sensing**.
 
 ---
 
@@ -40,14 +41,12 @@ Each branch represents a self-contained stage of the project’s growth — from
 - **Languages:** MicroPython
 - **Connectivity:**
   - Pico → OLED display (I2C)
-  - ESP32-S3 → Wi-Fi (HTTP + thingspeak) 
+  - ESP32-S3 → Wi-Fi (HTTP + thingspeak)
 - **Development Tools:** Thonny, VS Code,
 - **Hardware Interfaces:** GPIO, I²C
 - **Planned Extensions:**
   - Cloud dashboard and data visualization
   - Low-power sleep modes for energy efficiency
-
-
 
 ## Lessons Learned
 
@@ -56,14 +55,14 @@ Each branch represents a self-contained stage of the project’s growth — from
 - Implementing Wi-Fi and network stacks on embedded devices
 - visualizing the data on cloud dashboard
 - Exploring upython and coding
-- Solving more problems as the project evolves  
+- Solving more problems as the project evolves
 
 ---
 
 ## Repository Structure
 
-project_weather/
-├── README.md
-├── pico-zero/
-├── pico-zero-LED/
-└── esp32-s3/
+- project_weather/
+  - README.md
+  - pico-zero/
+  - pico-zero-LED/
+  - esp32-s3/
