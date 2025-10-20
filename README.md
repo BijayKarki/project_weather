@@ -1,7 +1,8 @@
 # Mini weather station
 
 This is the third iteration of the project. Current implementation features a use of ESP32-S3 board programmed in MicroPython.
-The WiFi connection capability of the board features real time tracker and API call for outdoor weather information. The data gathered is finally pushed to <a href=https://thingspeak.mathworks.com/channels/3024639> ThingSpeak </a> for easy acccess and visualization purposes.
+The WiFi connection capability of the board features real time tracker and API call for outdoor weather information. 
+The data gathered is pushed to ThingSpeak for visualization and acccess purposes.
 
 ## Components used
 
@@ -16,13 +17,27 @@ The WiFi connection capability of the board features real time tracker and API c
 2. <a href="https://github.com/robert-hh/SH1106/blob/master/readme.md"> SH1106 </a> (For 1.3" OLED display)
 3. <a href="https://thingspeak.mathworks.com/"> ThingSpeak </a>
 
-## Future updated
+## Features
 
 1. Real time tracker
 2. Outdoor weather information
-3. Online data visualization (public access)
+3. <a href=https://thingspeak.mathworks.com/channels/3024639> Data dashboard </a> (Public access)
 
-## Aditional info
+## Problems encountered
+
+| Problem                              | Cause                | Solution opted          |
+| :----------------------------------- |:-------------------- | :-----------------------|
+| The system freezes after few of days or run time | Unknown processes or memory leak or dht11 sensor | watch dog (60 sec timer)
+
+
+## Future work
+1. Run main.py connected to a computer and record the log to pin point the exact cause of the system freezes.
+2. An option to turn ON/OFF the OLED screen as per need
+3. May be different views on the screen
+
+
+
+## Aditional info for ESP32 setup
 
 - `ssd1306` library does not support 1.3 inch OLED display. This <a href="https://github.com/robert-hh/SH1106/blob/master/readme.md"> documentation </a> offers the solution.
 
