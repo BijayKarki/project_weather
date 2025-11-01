@@ -9,24 +9,23 @@ from machine import Pin
 import dht
 from time import sleep
 
-# Set up the DHT11 sensor
-dht_pin = Pin(4)
-dht_sensor = dht.DHT11(dht_pin)
+# Lazy initialization
+dht_sensor = None
 
 def read_dht11():
-    """
-    Reads temperature and humidity from the DHT11 sensor.
+    global dht_sensor
 
-    Returns:
-        tuple: (temperature, humidity)  as int if the reading is successful.
-        (None, None) if the reading fails due to a sensor error.
-    """
-    sleep(2)  # Sampling rate for DHT11 = 1 Hz 
+    if dht_sensor is None:
+        #print("Initializing DHT11...")
+        dht_pin = Pin(4)
+        dht_sensor = dht.DHT11(dht_pin)
+        sleep(1)  # allow sensor to stabilize
+
     try:
+        sleep(2)
         dht_sensor.measure()
         temp = dht_sensor.temperature()
         humidity = dht_sensor.humidity()
-        #print (type(humidity), type(temp))
         return temp, humidity
     except OSError as e:
         print(f"Failed to read from DHT11 sensor: {e}")

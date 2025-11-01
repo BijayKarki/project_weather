@@ -21,8 +21,6 @@ sync_time()
 scene_first()  # Welcome animation
 scene_second() # Fake mesurement start info
 
-# Display tabular weather and time info 
-
 # --- Watchdog (20s timeout) ---
 wdt = WDT(timeout=60000)
 
