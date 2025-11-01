@@ -8,21 +8,22 @@ from Intro_text import scene_first, scene_second, scene_interrupt, display_weath
 from oled_init import init_oled
 from open_weather_api import fetch_weather_data
 from connect_wifi import connect_wifi, is_connected
-from ntp_sync import sync_time_finland
+from set_time import sync_time
 from thingspeak import upload_to_thingspeak
 
 # --- Setup WiFi + NTP once ---
 ssid = config.WIFI_SSID
 passphrase = config.WIFI_PASSWORD
 connect_wifi(ssid, passphrase)
-sync_time_finland()
+sync_time()
 
 # --- Startup animation ---
 scene_first()  # Welcome animation
 scene_second() # Fake mesurement start info
 
+# Display tabular weather and time info 
 
-# --- Watchdog (60 sec timeout) ---
+# --- Watchdog (20s timeout) ---
 wdt = WDT(timeout=60000)
 
 try:
@@ -45,8 +46,7 @@ try:
                 print("[ERROR] DHT11 read failed:", e)
                 # keep last known values
             print(f"[{now}] Indoor update: {room_temp}°C, {room_humidity}%")
-            
-            # --- Display tabular weather and time info ---
+
             display_weather_n_time(room_temp, room_humidity, out_temp, out_humidity, wind_speed)
             last_time_update = now
 
@@ -85,5 +85,3 @@ except KeyboardInterrupt:
         scene_interrupt()
     except:
         print("OLED did not work. Exiting the program")
-
-

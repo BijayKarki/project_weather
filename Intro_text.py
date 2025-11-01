@@ -1,6 +1,6 @@
 from time import sleep
 from oled_init import init_oled
-from ntp_sync import sync_time_finland, get_Finnish_time
+from set_time import sync_time, get_Finnish_time
 
 # Start up LED and text message
 text1 = "WELCOME TO"
@@ -149,7 +149,7 @@ def display_weather_n_time(room_temp, room_humidity, out_temp, out_humidity, win
     
     
 if __name__ == "__main__":
-    sync_time_finland()
+    sync_time()
     
     print("Printing first function to your LED")
     scene_first()

@@ -25,9 +25,10 @@ The data gathered is pushed to ThingSpeak for visualization and acccess purposes
 
 ## Problems encountered
 
-| Problem                              | Cause                | Solution opted          |
-| :----------------------------------- |:-------------------- | :-----------------------|
-| The system freezes after few of days or run time | Unknown processes or memory leak or dht11 sensor | watch dog (60 sec timer)
+|Sn. | Problem                              | Cause                | Solution opted          |
+|----| :----------------------------------- |:-------------------- | :-----------------------|
+|1   | The system freezes after few of days or run time | Unknown processes or memory leak or dht11 sensor | watch dog (60 sec timer)|
+|2   | Time syncing issuce (DST)| Static hrs added to UTC |Dynamic hrs +2 or +3 depending on season|
 
 
 ## Future work
