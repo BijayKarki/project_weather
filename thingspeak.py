@@ -1,5 +1,5 @@
 from open_weather_api import fetch_weather_data 
-from dht11_sensor import read_dht11 
+# from aht21_sensor import read_dht11 
 import urequests
 import time 
 

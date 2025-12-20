@@ -1,21 +1,28 @@
 from machine import Pin, I2C
 import sh1106
 
-ID = 1
-SCL = 8
-SDA = 3
+OLED_WIDTH = 128
+OLED_HEIGHT = 64
+CONTRAST = 1 #(0 - 255)
+ROTATION = 180# current setup requires to be upside down
 
-# Initialize I2C
-def init_oled():
-    i2c = I2C(ID, scl=Pin(SCL), sda=Pin(SDA))
+def init_oled(i2c):
+    """
+    Initialize and return the SH1106 OLED display.
 
-    # Initialize the OLED display
-    oled_width = 128
-    oled_height = 64
-    oled = sh1106.SH1106_I2C(oled_width, oled_height, i2c, rotate=180)
+    Parameters
+    ----------
+    i2c : machine.I2C
+        Already initialized I2C bus for the OLED
 
+    Returns
+    -------
+    oled : SH1106_I2C object
+    width : int
+    height : int
+    """
+    oled = sh1106.SH1106_I2C(OLED_WIDTH, OLED_HEIGHT, i2c, rotate=ROTATION)
+    oled.contrast(CONTRAST)
     oled.invert(False)
-    oled.contrast = int(10)  # 0 - 255 contrast
-    
-    return oled, oled_width, oled_height
+    return oled, OLED_WIDTH, OLED_HEIGHT
 
