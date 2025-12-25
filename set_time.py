@@ -8,9 +8,11 @@ Provides a helper to get the local Finland time (UTC+2 / UTC+3 DST).
 import ntptime
 import time
 
-# Use Finnish NTP pool
-ntptime.host = 'fi.pool.ntp.org'  
+ntptime.host = 'fi.pool.ntp.org'  # Use Finnish NTP pool
 
+# -------------------------------------------------
+# 1. Sync RTC time with NTP (sets UTC time)
+# -------------------------------------------------
 def sync_time():
     """Syncs device RTC to UTC using NTP."""
     try:
@@ -20,6 +22,9 @@ def sync_time():
     except Exception as e:
         print(f"Failed to sync time: {e}")
 
+# -------------------------------------------------
+# 2. DST & Finland time helpers
+# -------------------------------------------------
 def is_dst(year, month, day):
     """Returns True if Finland is in DST on this date."""
     def last_sunday(year, month):
@@ -48,9 +53,14 @@ def get_Finnish_time():
         offset += 3600
     return time.localtime(time.time() + offset)
 
+
+# -------------------------------------------------
+# 3 Test / example usage
+# -------------------------------------------------
 if __name__ == "__main__":
     sync_time()
     local = get_Finnish_time()
     print("Finland Local Time: {:02d}:{:02d}:{:02d} {:02d}-{:02d}-{:04d}".format(
         local[3], local[4], local[5], local[2], local[1], local[0]
     ))
+
