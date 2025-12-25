@@ -23,11 +23,12 @@ The initial goal was just to measure the indoor temperature. However it is much 
 
 ## Evolution
 
-| Stage |  Branch                                                                         | Highlights                                                 | MCU                    |
-| ----- | --------------------------------------------------------------------------------| -----------------------------------------------------------|------------------------|
-| 1     | [pico-zero-V1](https://github.com/BijayKarki/project_weather/tree/pico-zero)    |Reads DHT11 sensor, displays data locally on an OLED screen | RPi-Pico-Zero (RP2040) |
-| 2     | [pico-zero-V2](https://github.com/BijayKarki/project_weather/tree/pico-zero-LED)|feats: onboard LED indicators + TEXT animation              | RPi-Pico-Zero (RP2040) |
-| 3     | [esp32-s3](https://github.com/BijayKarki/project_weather/tree/ESP32-S3)         |Adds Wi-Fi connectivity, real time, urequests, cloud upload | ESP32-S3               |
+| Stage | Branch                                                                              | Highlights                                                                     | MCU                    |
+| ----- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ---------------------- |
+| 1     | [pico-zero-V1](https://github.com/BijayKarki/project_weather/tree/pico-zero)        | Reads DHT11 sensor, displays data locally on an OLED screen                    | RPi-Pico-Zero (RP2040) |
+| 2     | [pico-zero-V2](https://github.com/BijayKarki/project_weather/tree/pico-zero-LED)    | feats: onboard LED indicators + TEXT animation                                 | RPi-Pico-Zero (RP2040) |
+| 3     | [esp32-s3](https://github.com/BijayKarki/project_weather/tree/ESP32-S3)             | Adds Wi-Fi connectivity, real time, urequests, cloud upload                    | ESP32-S3               |
+| 4     | [esp32-s3-aht21](https://github.com/BijayKarki/project_weather/tree/ESP32-S3-aht21) | Uses AHT21 sensor, IRQ button for screen ON/OFF (automatic during night hours) | ESP32-S3               |
 
 Each branch represents a progression towards adding something more.<br>
 **Local sensing** → **Online Sensing**.
