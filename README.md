@@ -18,14 +18,17 @@ The data gathered is pushed to ThingSpeak for visualization and further acccess.
 1. ntptime
 2. <a href="https://github.com/robert-hh/SH1106/blob/master/readme.md"> SH1106 </a> (For 1.3" OLED display)
 3. <a href="https://thingspeak.mathworks.com/"> ThingSpeak </a>
+4. <a href="https://mqtt.org/"> MQTT </a>
 
 ## Features
 
 1. Real time tracker
 2. Outdoor weather information
 3. ThingSpeak <a href=https://thingspeak.mathworks.com/channels/3024639> dashboard </a>
-4. Fetching the data to Home Assistant dashboard
-5. The OLED display is set to automatically turn OFF during the night hours (22:00 - 06:00)
+4. Data integration to Home Assistant dashboard
+   - Via Thingspeak (yaml config; platform: rest, every 15 mins)
+   - MQTT (sensor data every 30 secs)
+5. The OLED display set to automatically turn OFF during the night hours (22:00 - 06:00)
    - The button press will revive the screen for 10 sec (by default) before turning OFF.
    - The button can also be used to manually turn OFF before 10 sec interval
 
@@ -34,13 +37,13 @@ The data gathered is pushed to ThingSpeak for visualization and further acccess.
 | Sn. | Problem                                   | Cause                                           | Solution opted                                        |
 | --- | :---------------------------------------- | :---------------------------------------------- | :---------------------------------------------------- |
 | 1   | The switch does not respond sometimes     | Basic setup: just an internal pull up resistor  | Interrupt handler switch implemented                  |
-| 2   | Outdoor data is not updated instantly     | Algorithm needs some minor revisions       | Algorithm changed to update the new data accordingly              |
+| 2   | Outdoor data is not updated instantly     | Algorithm needs some minor revisions            | Algorithm changed to update the new data accordingly  |
 | 3   | Conflict between I2C bus (OLED and AHT21) | Earlier programming logic for only 1 I2C device | Edited the code and logic for both I2C initialization |
 
 ## Future work
 
 1. 1 line I2C bus (unlike current implementation)
-2. MQTT for data exchange between other devices in LAN.
+2. ~~MQTT for data exchange between other devices in LAN~~.
 3. More GUI options for the OLED ?
 
 ## Aditional info for ESP32 setup
